@@ -1,52 +1,28 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>My Simple Website</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            margin: 0;
-            padding: 0;
-            background-color: #f0f0f0;
-        }
-        header {
-            background-color: #333;
-            color: #fff;
-            padding: 20px;
-            text-align: center;
-        }
-        h1 {
-            margin: 0;
-            font-size: 2em;
-        }
-        main {
-            padding: 20px;
-            text-align: center;
-        }
-        footer {
-            background-color: #333;
-            color: #fff;
-            padding: 10px;
-            text-align: center;
-            position: fixed;
-            width: 100%;
-            bottom: 0;
-        }
-    </style>
-</head>
-<body>
-    <header>
-        <h1>Welcome to My Simple Website</h1>
-    </header>
-    <main>
-        <p>This is a simple static website created using HTML and CSS.</p>
-        <p>Feel free to modify and expand it according to your needs!</p>
-    </main>
-    <footer>
-        <p>&copy; 2024 My Simple Website. All rights reserved.</p>
-    </footer>
-</body>
-</html>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Shiny App</title>
+    <script
+      src="./shinylive/load-shinylive-sw.js"
+      type="module"
+    ></script>
+    <script type="module">
+      import { runApp } from "./shinylive/shinylive.js";
+      const response = await fetch("./app.json");
+      if (!response.ok) {
+        throw new Error("HTTP error loading app.json: " + response.status);
+      }
+      const appFiles = await response.json();
 
+      const appRoot = document.getElementById("root");
+      runApp(appRoot, "viewer", {startFiles: appFiles}, "r");
+    </script>
+    <link rel="stylesheet" href="./shinylive/style-resets.css" />
+    <link rel="stylesheet" href="./shinylive/shinylive.css" />
+  </head>
+  <body>
+    <div style="height: 100vh; width: 100vw" id="root"></div>
+  </body>
+</html>
